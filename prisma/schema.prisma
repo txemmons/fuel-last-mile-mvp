@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EventType {
+  RECEIPT
+  CONSUMPTION
+  SHORTFALL
+}
+
+enum Unit {
+  LITERS
+  GALLONS
+}
+
+model FuelEvent {
+  id                String    @id @default(uuid())
+  eventType         EventType @map("event_type")
+  eventTimestamp    DateTime  @map("event_timestamp")
+  siteId            String    @map("site_id")
+  fuelType          String    @map("fuel_type")
+  quantity          Decimal
+  unit              Unit
+  onHandAfter       Decimal?  @map("on_hand_after")
+  reportedBy        String    @map("reported_by")
+  notes             String?
+  sourceRef         String?   @map("source_ref")
+  supplier          String?
+  deliveryRef       String?   @map("delivery_ref")
+  batchOrLot        String?   @map("batch_or_lot")
+  consumerType      String?   @map("consumer_type")
+  missionOrTaskRef  String?   @map("mission_or_task_ref")
+  expectedQuantity  Decimal?  @map("expected_quantity")
+  actualQuantity    Decimal?  @map("actual_quantity")
+  shortfallReason   String?   @map("shortfall_reason")
+  incidentFlag      Boolean   @default(false) @map("incident_flag")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  @@map("fuel_events")
+  @@index([eventTimestamp])
+  @@index([eventType])
+}
