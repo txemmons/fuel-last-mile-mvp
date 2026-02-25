@@ -15,16 +15,18 @@
 
 ## 3) Product Scope
 ### In-Scope (v1)
-- Simple web app with authentication-lite access (single team workspace).
+- Simple web app with a single shared team workspace; user identity may be mocked or minimally implemented in v1.
 - Event capture for three core event types:
   - Receipt
   - Consumption
   - Shortfall
 - Chronological event timeline with filters (date/type/site).
 - Basic dashboard cards (current on-hand estimate, recent receipts, shortfall total).
+- Dashboard values are derived estimates based solely on recorded events and are not a system of record.
 - AI-assisted features (support only):
   - Data-quality checks (e.g., missing fields, suspicious unit mismatch, outlier values)
   - Plain-language summary generation for selected date range
+  - AI outputs must be reviewable, non-blocking, and never overwrite user-entered data.
 - CSV/PDF export of event summary and timeline snapshot.
 - Max **4–5 screens** total.
 
@@ -95,7 +97,7 @@ Use a single `fuel_events` table with a required `event_type` and shared fields,
 - `mission_or_task_ref` (string, optional): operation reference.
 
 ### Shortfall Fields
-- `expected_quantity` (decimal): expected amount before discrepancy.
+- `expected_quantity` (decimal): expected amount before discrepancy. For shortfall events, quantity represents the measured amount; expected_quantity represents the planned amount.
 - `actual_quantity` (decimal): measured amount.
 - `shortfall_reason` (enum/string, optional): spill, meter variance, unknown, theft suspected, etc.
 - `incident_flag` (boolean): indicates if follow-up is needed.
