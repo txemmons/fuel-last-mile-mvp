@@ -1,0 +1,8 @@
+node_modules
+.next
+.env
+.env.local
+coverage
+*.log
+# local database - allows testing locally without pushing data to repository
+prisma/dev.db
