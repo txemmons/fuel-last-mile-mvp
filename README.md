@@ -4,7 +4,7 @@ Minimal web-based walking skeleton for last-mile fuel accountability events.
 
 ## What is implemented
 - Next.js + TypeScript app (App Router)
-- Prisma + Postgres schema with a single `fuel_events` model
+- Prisma + SQLite schema with a single `fuel_events` model
 - Three pages only:
   - `/events/new` create Receipt / Consumption / Shortfall event
   - `/events` chronological event timeline
@@ -14,33 +14,28 @@ Minimal web-based walking skeleton for last-mile fuel accountability events.
 
 ## Prerequisites
 - Node.js 20+
-- A Postgres database URL
 
-## Local setup
+## Local setup (SQLite, no external database required)
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Create an `.env` file:
+2. Generate Prisma client:
    ```bash
-   DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DBNAME?schema=public"
+   npx prisma generate
    ```
-3. Generate Prisma client:
+3. Create the local SQLite database and tables:
    ```bash
-   npm run prisma:generate
+   npx prisma db push
    ```
-4. Create and apply the initial migration:
-   ```bash
-   npm run prisma:migrate -- --name init
-   ```
-5. Start the dev server:
+4. Start the dev server:
    ```bash
    npm run dev
    ```
-6. Open:
-   - `http://localhost:3000/events/new`
-   - `http://localhost:3000/events`
-   - `http://localhost:3000/summary`
+5. Open:
+   - http://localhost:3000/events/new
+   - http://localhost:3000/events
+   - http://localhost:3000/summary
 
 ## Notes
 - This is intentionally minimal and unpolished to preserve readability and fast iteration.
