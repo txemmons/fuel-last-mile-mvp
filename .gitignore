@@ -4,3 +4,5 @@ node_modules
 .env.local
 coverage
 *.log
+# local database - allows testing locally without pushing data to repository
+prisma/dev.db
